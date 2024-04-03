@@ -91,6 +91,11 @@
                         </x-secondary-button>
                     </x-confirms-password>
                 @elseif ($showingConfirmation)
+                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
+                        <x-secondary-button wire:loading.attr="disabled">
+                            {{ __('Cancel') }}
+                        </x-secondary-button>
+                    </x-confirms-password>
                     <x-confirms-password wire:then="confirmTwoFactorAuthentication">
                         <x-button type="button" class="me-3" wire:loading.attr="disabled">
                             {{ __('Confirm') }}
@@ -104,13 +109,7 @@
                     </x-confirms-password>
                 @endif
 
-                @if ($showingConfirmation)
-                    <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-secondary-button wire:loading.attr="disabled">
-                            {{ __('Cancel') }}
-                        </x-secondary-button>
-                    </x-confirms-password>
-                @else
+                @if (!$showingConfirmation)
                     <x-confirms-password wire:then="disableTwoFactorAuthentication">
                         <x-danger-button wire:loading.attr="disabled">
                             {{ __('Disable') }}
